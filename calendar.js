@@ -19,7 +19,6 @@
   // * Implement DOM events
   // * Implement internal events
   // * Allow easier class adding
-  // * Handle prior and future month days.
   // 
 
   // Store reference to the global scope.
@@ -195,7 +194,7 @@
 
     // Create the internal month matrix.
     update: function() {
-      var weekDay, day, weekOffset, firstDay, nextMonth;
+      var weekDay, day, weekOffset, firstDay, offset;
       // Internal month matrix array.
       var month = [
         [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0],
@@ -241,16 +240,15 @@
         shadow.setDate(++dayCounter);
       }
 
+      // Craft it based off the current month.
+      var previousMonth = new Date(shadow.getTime());
+      // Start at the beginning of the month.
+      previousMonth.setDate(1);
+      // Set to the previous month.
+      previousMonth.setMonth(previousMonth.getMonth() - 1);
+
       // Fill in previous month.
       month.forEach(function(week, weekOffset) {
-        var offset;
-        // Craft it based off the current month.
-        var previousMonth = new Date(shadow.getTime());
-        // Start at the beginning of the month.
-        previousMonth.setDate(1);
-        // Set to the previous month.
-        previousMonth.setMonth(previousMonth.getMonth() - 1);
-
         // Ensure we're operating only on weeks that exist on or prior to the
         // first day.
         if (weekOffset <= firstDay[0]) {
@@ -274,13 +272,13 @@
         }
       }, this);
 
+      // Craft it based off the current month.
+      var nextMonth = new Date(shadow.getTime());
+      // Start at the end of the month.
+      nextMonth.setDate(shadow.getDate()-1);
+
       // Fill in next month.
       month.forEach(function(week, currentWeekOffset) {
-        var offset;
-        // Craft it based off the current month.
-        var nextMonth = new Date(shadow.getTime());
-        // Start at the end of the month.
-        nextMonth.setDate(shadow.getDate()-1);
 
         // Ensure we're operating only on weeks that exist on or after the
         // last day.

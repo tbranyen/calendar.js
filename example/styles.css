@@ -1,0 +1,49 @@
+.calendar {
+  width: 500px;
+  height: 500px;
+  position: relative;
+}
+
+.calendar .month {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  text-align: center;
+}
+
+.calendar .week .prev, .calendar .week .next {
+  opacity: .2;
+}
+
+.calendar .week .day.today {
+  border: 1px solid #000;
+}
+
+.calendar .week .day {
+  background: #F6F6F4;
+  border: 1px solid #C8C7C6;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+}
+
+.calendar .week .day:first-child, .week .day:last-child {
+  background: #E7E7E7;
+}
+
+div.controls {
+  width: 220px;
+  text-align: center;
+}
+
+.prevMonth {
+  float: left;
+  cursor: pointer;
+  width: 45px;
+}
+
+.nextMonth {
+  float: right;
+  cursor: pointer;
+  width: 45px;
+}
