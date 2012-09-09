@@ -50,7 +50,7 @@ To create a new Calendar instance to configure:
 var cal = new Calendar(".calendar");
 ```
 
-## Copyright ##
+---
 
 Copyright 2012 Matchbox, Inc.
 
