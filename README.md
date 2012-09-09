@@ -54,4 +54,4 @@ var cal = new Calendar(".calendar");
 
 Copyright 2012 Matchbox, Inc.
 
-![Matchbox, Inc.]()
+![Matchbox, Inc.](https://github.com/matchbox/calendar.js/raw/assets/matchbox-logo-240x40.png)
