@@ -156,6 +156,8 @@
   function Calendar(el, options) {
     // Use the passed element or find it via selector lookup.
     this.el = typeof el === "string" ? document.querySelector(el) : el;
+    // Useful date object to represent today.
+    this.today = new Date();
 
     // Set default options.
     this.options = {
@@ -163,7 +165,7 @@
       tagName: { month: "table", week: "tr", day: "td" },
 
       // The classNames to use on respective elements.
-      className: { month: "month", week: "week", day: "day", today: "today" }
+      className: { month: "month", week: "week", day: "day" }
     };
 
     // Mix the options passed into the constructor into the options object.
@@ -206,7 +208,7 @@
         [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0]
       ];
       // Create a shadow date to work off, as to not alter the interior date.
-      var shadow = new Date(this.date.getTime());
+      var shadow = new Date(this.date);
       // Start the day counter off at 1 (first day in the month).
       var dayCounter = 1;
       // Save the current month for future comparisons to find the bounding
@@ -238,14 +240,17 @@
         }
 
         // Add this day to the month array.
-        month[weekOffset][weekDay] = { value: dayCounter, type: "day" };
+        month[weekOffset][weekDay] = {
+          value: new Date(shadow),
+          type: "day"
+        };
 
         // Progress to tomorrow.
         shadow.setDate(++dayCounter);
       }
 
       // Craft it based off the current month.
-      var previousMonth = new Date(shadow.getTime());
+      var previousMonth = new Date(shadow);
       // Start at the beginning of the month.
       previousMonth.setDate(1);
       // Set to the previous month.
@@ -270,14 +275,17 @@
               // Only calculate the offset once for the first.
               offset = !offset ? -(firstDayOffset - dayOffset) : 1;
               previousMonth.setDate(previousMonth.getDate() + offset);
-              week[weekDay] = { type: "prev", value: previousMonth.getDate() };
+              week[weekDay] = {
+                value: new Date(previousMonth),
+                type: "prev"
+              };
             }
           }, this);
         }
       }, this);
 
       // Craft it based off the current month.
-      var nextMonth = new Date(shadow.getTime());
+      var nextMonth = new Date(shadow);
       // Start at the end of the month.
       nextMonth.setDate(shadow.getDate()-1);
 
@@ -293,7 +301,10 @@
             if (!day) {
               // Only calculate the offset once for the first.
               nextMonth.setDate(nextMonth.getDate() + 1);
-              week[currentWeekDay] = { type: "next", value: nextMonth.getDate() };
+              week[currentWeekDay] = {
+                value: new Date(nextMonth),
+                type: "next"
+              };
             }
           }, this);
         }
@@ -322,7 +333,8 @@
 
     // Create the calendar DOM structure.
     render: function() {
-      this.emit("beforeRender");
+      // Ensure the date matrix is updated.
+      this.update();
 
       // Create a clone of the current element to operate (off the document).
       var shadow = this.el.cloneNode(false);
@@ -330,6 +342,9 @@
       var monthEl = document.createElement(this.options.tagName.month);
       // Set the className.
       monthEl.className = this.options.className.month;
+
+      // Allow a developer to modify the element before rendering.
+      this.emit("beforeRender", this);
 
       // Iterate over all the weeks and add each one.
       this._month.forEach(function(week) {
@@ -344,19 +359,22 @@
           // Set the className.
           dayEl.className = this.options.className.day;
 
-          // Set today object.
-          if (day.value === this.date.getDate()) {
+          // Set today object, ensure year/month/day are all equal.
+          if (day.value.getFullYear() === this.today.getFullYear() &&
+              day.value.getMonth() === this.today.getMonth() && 
+              day.value.getDate() === this.today.getDate()
+          ) {
             day.type = "today";
           }
 
-          // Apply class styles.
-          if (day.type === "today") {
-            dayEl.className += " " + this.options.className.today;
-          } else if (day.type === "prev") {
-            dayEl.className += " prev";
-          } else if (day.type === "next") {
-            dayEl.className += " next";
+          // If the type isn't already day, then ensure that class is also
+          // added.
+          if (day.type !== "day") {
+            dayEl.className = [dayEl.className, "day"].join(" ");
           }
+
+          // Apply class type styles.
+          dayEl.className = [dayEl.className, day.type].join(" ");
 
           // By default set the innerHTML to the day value.  If a custom
           // `renderDay` function is specified, then allow that function to
@@ -364,7 +382,7 @@
           if (this._callbacks[day.type]) {
             this._callbacks[day.type](dayEl, day);
           } else {
-            dayEl.innerHTML = day.value || "&nbsp;";
+            dayEl.innerHTML = day.value.getDate() || "&nbsp;";
           }
 
           // Add the day element to the week element.
@@ -382,7 +400,8 @@
       this.el.parentNode.replaceChild(shadow, this.el);
       this.el = shadow;
 
-      this.emit("afterRender");
+      // Allow a developer to modify the element after rendering is complete.
+      this.emit("afterRender", this);
 
       return this;
     }

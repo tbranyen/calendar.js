@@ -26,8 +26,8 @@
     var $ = function(s) { return document.querySelector(s); };
     var cal = new Calendar(".calendar");
 
-    cal.renderDay("prev", function(element, day) {
-
+    cal.renderDay("today", function(element, date) {
+      element.innerHTML = "*";
     });
 
     // Show some stats whenever the calendar is changed.
@@ -39,14 +39,16 @@
     // Initialize the calendar control.
     cal.init();
 
+    // Update to the previous month.
     $(".prevMonth").addEventListener("click", function() {
       cal.date.setMonth( cal.date.getMonth() - 1 );
-      cal.update().render();
+      cal.render();
     }, true);
 
+    // Update to the next month.
     $(".nextMonth").addEventListener("click", function() {
       cal.date.setMonth( cal.date.getMonth() + 1 );
-      cal.update().render();
+      cal.render();
     }, true);
   </script>
 </body>

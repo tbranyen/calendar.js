@@ -1,7 +1,7 @@
 calendar.js
 ===========
 
-A drop-in component for creating calendars in modern web browsers with
+A tiny component for creating calendars in modern web browsers with
 performance, flexibility, and stability in mind.
 
 ## Download & Include ##
@@ -49,6 +49,13 @@ To create a new Calendar instance to configure:
 // Must pass in either a DOMNode or a string selector.
 var cal = new Calendar(".calendar");
 ```
+
+### Binding to custom Calendar events ###
+
+There are several events you can listen to, which can be used to update your UI
+accordingly.
+
+* `update` this event is triggered whenever the update() function is called
 
 ---
 
