@@ -55,7 +55,39 @@ cal.init();
 
 ### Change default tag and class names ###
 
-### Binding to custom Calendar events ###
+If you wish to change default tag and class names simply override them on the
+`options` object.
+
+Changing the element types that are created is this simple (useful if you want
+to avoid having `<table/>`'s built):
+
+``` javascript
+// Overriding only a specific tagName property.
+cal.options.tagName.month = "div";
+
+// Overriding all tagName properties.
+cal.options.tagName = {
+  month: "table",
+  week: "tr",
+  day: "td"
+};
+```
+
+Changing the class name's used is done in the manner:
+
+``` javascript
+// Overriding only a specific className property.
+cal.options.className.month = "month";
+
+// Overriding all className properties.
+cal.options.className = {
+  month: "month",
+  week: "week",
+  day: "day"
+};
+```
+
+### Utilizing custom Calendar events ###
 
 There are several events you can listen to, which can be used to update your UI
 accordingly.
@@ -85,22 +117,41 @@ respectively.
 
 ...
 
-## Contributing ##
-
-**Discuss contribution stuff here**
-
 ## Building ##
 
-**Discuss Grunt stuff here**
+If you wish to lint the source, build a distribution file, and/or run unit
+tests you will need to install [Grunt](https://github.com/cowboy/grunt).  Once
+this is installed open a terminal to the calendar.js path and run:
+
+``` bash
+# To run linting, testing, and minification.
+grunt
+
+# To run just a single task.
+grunt lint
+
+# To run multiple tasks.
+grunt lint min
+```
+
+Available tasks are: `lint`, `qunit`, and `min`.
+
+## Contributing ##
+
+Before contributing ensure you understand how to build this project and all
+fixes should include matching unit tests, pass linting, and provide an updated
+minified source file for distribution.
+
+Please follow the style found within the source and exercise solid judgement.
 
 ## Author ##
 
 **Tim Branyen**
 
-+ http://twitter.com/tbranyen
-+ http://github.com/tbranyen
+* http://twitter.com/tbranyen
+* http://github.com/tbranyen
 
-## ##
+---
 
 Copyright 2012 Matchbox, Inc.
 
