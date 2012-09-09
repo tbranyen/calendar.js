@@ -85,22 +85,22 @@ respectively.
 
 ...
 
-### Contributing ###
+## Contributing ##
 
 **Discuss contribution stuff here**
 
-### Building ###
+## Building ##
 
 **Discuss Grunt stuff here**
 
-### Author ###
+## Author ##
 
 **Tim Branyen**
 
 + http://twitter.com/tbranyen
 + http://github.com/tbranyen
 
----
+## ##
 
 Copyright 2012 Matchbox, Inc.
 
