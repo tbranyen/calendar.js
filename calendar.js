@@ -5,21 +5,6 @@
  */
 (function() {
 
-  //
-  // Features:
-  // ES5 without compatibility bloat
-  // Super fast rendering off Document
-  // Date convenience methods
-  // Custom events
-  // 
-
-  //
-  // TODO
-  // * Implement DOM events
-  // * Implement internal events
-  // * Allow easier class adding
-  // 
-
   // Store reference to the global scope.
   var window = this;
   var document = this.document;
@@ -189,6 +174,9 @@
         getFullWeek: getFullWeek
       });
 
+      // Allow events to run before initial update and render.
+      this.emit("initialize", this);
+
       // Reset to today for initial render.
       this.update();
 
@@ -200,7 +188,7 @@
 
     // Create the internal month matrix.
     update: function() {
-      var weekDay, day, weekOffset, firstDay, offset;
+      var weekDay, day, weekOffset, firstDay, offset, previousMonth, nextMonth;
       // Internal month matrix array.
       var month = [
         [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0],
@@ -250,7 +238,8 @@
       }
 
       // Craft it based off the current month.
-      var previousMonth = new Date(shadow);
+      previousMonth = new Date(shadow);
+
       // Start at the beginning of the month.
       previousMonth.setDate(1);
       // Set to the previous month.
@@ -285,7 +274,8 @@
       }, this);
 
       // Craft it based off the current month.
-      var nextMonth = new Date(shadow);
+      nextMonth = new Date(shadow);
+
       // Start at the end of the month.
       nextMonth.setDate(shadow.getDate()-1);
 
@@ -314,7 +304,7 @@
       this._month = month;
 
       // Emit an update event.
-      this.emit("update");
+      this.emit("update", this);
 
       return this;
     },

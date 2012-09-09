@@ -48,14 +48,57 @@ To create a new Calendar instance to configure:
 ``` javascript
 // Must pass in either a DOMNode or a string selector.
 var cal = new Calendar(".calendar");
+
+// Call init once you have finished binding event handlers and changed options.
+cal.init();
 ```
+
+### Change default tag and class names ###
 
 ### Binding to custom Calendar events ###
 
 There are several events you can listen to, which can be used to update your UI
 accordingly.
 
-* `update` this event is triggered whenever the update() function is called
+* `initialize` is triggered once the calendar is created
+* `update` is triggered after the `update` function is called
+* `beforeRender` is triggered before rendering starts
+* `afterRender` is triggered after rendering ends
+
+An example of when binding to an event can be useful:
+
+``` javascript
+// Update a month label with the current calendar month.
+cal.on("update", function(cal) {
+  $(".month").html(cal.date.getFullMonth());
+});
+```
+
+You can create and trigger custom events, using `on` and `trigger` functions
+respectively.
+
+### Customizing what is shown in specific date cells ###
+
+...
+
+### Changing and updating the calendar date ###
+
+...
+
+### Contributing ###
+
+**Discuss contribution stuff here**
+
+### Building ###
+
+**Discuss Grunt stuff here**
+
+### Author ###
+
+**Tim Branyen**
+
++ http://twitter.com/tbranyen
++ http://github.com/tbranyen
 
 ---
 
