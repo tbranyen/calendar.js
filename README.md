@@ -1,21 +1,8 @@
 calendar.js
 ===========
 
-Copyright 2012 Matchbox, Inc.
-
 A drop-in component for creating calendars in modern web browsers with
 performance, flexibility, and stability in mind.
-
-## Features ##
-
-There are many features that *calendar.js* provides, including:
-
-* Fully integrated custom events.
-* ES5 utilization and DOM Level 2 access.
-* Performance!
-* Tested!
-* Lightweight!
-* No dependencies!
 
 ## Download & Include ##
 
@@ -62,3 +49,9 @@ To create a new Calendar instance to configure:
 // Must pass in either a DOMNode or a string selector.
 var cal = new Calendar(".calendar");
 ```
+
+## Copyright ##
+
+Copyright 2012 Matchbox, Inc.
+
+![Matchbox, Inc.]()

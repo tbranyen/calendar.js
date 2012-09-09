@@ -15,7 +15,6 @@
 
   //
   // TODO
-  // * Better Day text insertion
   // * Implement DOM events
   // * Implement internal events
   // * Allow easier class adding
@@ -35,8 +34,10 @@
     callbacks: {},
 
     // Listen on the given `event` with `fn`.
-    on: function(event, fn){
+    on: function(event, fn, context){
       var callback = this.callbacks[event] = this.callbacks[event] || [];
+
+      fn._context = context;
       callback.push(fn);
 
       return this;
@@ -44,7 +45,7 @@
 
     // Adds an `event` listener that will be invoked a single time then
     // automatically removed.
-    once: function(event, fn){
+    once: function(event, fn, context){
       var self = this;
 
       function on() {
@@ -53,7 +54,7 @@
       }
 
       fn._off = on;
-      this.on(event, on);
+      this.on(event, on, context);
       return this;
     },
 
@@ -92,7 +93,7 @@
         callbacks = callbacks.slice(0);
 
         for (i = 0, len = callbacks.length; i < len; ++i) {
-          callbacks[i].apply(this, args);
+          callbacks[i].apply(callbacks[i]._context || this, args);
         }
       }
 
@@ -169,6 +170,9 @@
     extend(this.options, options);
     // Give this instance events!
     extend(this, Events);
+
+    // Store callbacks for `renderDay` this should not be directly modified.
+    this._callbacks = {};
   }
 
   Calendar.prototype = {
@@ -234,7 +238,7 @@
         }
 
         // Add this day to the month array.
-        month[weekOffset][weekDay] = dayCounter;
+        month[weekOffset][weekDay] = { value: dayCounter, type: "day" };
 
         // Progress to tomorrow.
         shadow.setDate(++dayCounter);
@@ -266,7 +270,7 @@
               // Only calculate the offset once for the first.
               offset = !offset ? -(firstDayOffset - dayOffset) : 1;
               previousMonth.setDate(previousMonth.getDate() + offset);
-              week[weekDay] = { type: "prev", val: previousMonth.getDate() };
+              week[weekDay] = { type: "prev", value: previousMonth.getDate() };
             }
           }, this);
         }
@@ -289,7 +293,7 @@
             if (!day) {
               // Only calculate the offset once for the first.
               nextMonth.setDate(nextMonth.getDate() + 1);
-              week[currentWeekDay] = { type: "next", val: nextMonth.getDate() };
+              week[currentWeekDay] = { type: "next", value: nextMonth.getDate() };
             }
           }, this);
         }
@@ -298,10 +302,22 @@
       // Assign the internal month matrix.
       this._month = month;
 
-      // Emit a change event.
-      this.emit("change");
+      // Emit an update event.
+      this.emit("update");
 
       return this;
+    },
+
+    // Allow an intermediary
+    renderDay: function(type, callback) {
+      // If no type is specified, then run the callback for all types.
+      if (typeof type === "function") {
+        type = "all";
+        callback = type;
+      }
+
+      // Assign type string and render function.
+      this._callbacks[type] = callback;
     },
 
     // Create the calendar DOM structure.
@@ -309,7 +325,7 @@
       this.emit("beforeRender");
 
       // Create a clone of the current element to operate (off the document).
-      var shadow = this.el.cloneNode();
+      var shadow = this.el.cloneNode(false);
       // Create a month element to hold the calendar weeks.
       var monthEl = document.createElement(this.options.tagName.month);
       // Set the className.
@@ -328,8 +344,13 @@
           // Set the className.
           dayEl.className = this.options.className.day;
 
-          // Add a today className.
-          if (day === this.date.getDate()) {
+          // Set today object.
+          if (day.value === this.date.getDate()) {
+            day.type = "today";
+          }
+
+          // Apply class styles.
+          if (day.type === "today") {
             dayEl.className += " " + this.options.className.today;
           } else if (day.type === "prev") {
             dayEl.className += " prev";
@@ -337,11 +358,13 @@
             dayEl.className += " next";
           }
 
-          // For now just set the text.
-          if (typeof day === "object") {
-            dayEl.innerHTML = day.val;
+          // By default set the innerHTML to the day value.  If a custom
+          // `renderDay` function is specified, then allow that function to
+          // process a different value to the element.
+          if (this._callbacks[day.type]) {
+            this._callbacks[day.type](dayEl, day);
           } else {
-            dayEl.innerHTML = day || "&nbsp;";
+            dayEl.innerHTML = day.value || "&nbsp;";
           }
 
           // Add the day element to the week element.

@@ -26,18 +26,17 @@
     var $ = function(s) { return document.querySelector(s); };
     var cal = new Calendar(".calendar");
 
-    cal.options.tagName = {
-      month: "div",
-      week: "div",
-      day: "div"
-    };
+    cal.renderDay("prev", function(element, day) {
 
-    // Show the month.
-    cal.on("change", function() {
+    });
+
+    // Show some stats whenever the calendar is changed.
+    cal.on("update", function() {
       $(".month").innerHTML = this.date.getFullMonth();
       $(".year").innerHTML = this.date.getFullYear();
     });
     
+    // Initialize the calendar control.
     cal.init();
 
     $(".prevMonth").addEventListener("click", function() {
