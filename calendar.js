@@ -1,6 +1,6 @@
 /*!
  * calendar.js v0.0.1
- * Copyright 2012, Tim Branyen (@tbranyen)
+ * Copyright 2015, Tim Branyen (@tbranyen)
  * calendar.js may be freely distributed under the MIT license.
  */
 (function() {
@@ -220,7 +220,7 @@
         // Find the weekDay (0-6).
         weekDay = shadow.getDay();
         // Find the week.
-        weekOffset = ~~((day+(6-weekDay))/7);
+        weekOffset = Math.floor((day+(6-weekDay))/7);
 
         // First day offset cache.
         if (dayCounter === 1) {
@@ -319,6 +319,7 @@
 
       // Assign type string and render function.
       this._callbacks[type] = callback;
+      this._callbacks["all"] = callback;
     },
 
     // Create the calendar DOM structure.
@@ -371,6 +372,10 @@
           // process a different value to the element.
           if (this._callbacks[day.type]) {
             this._callbacks[day.type](dayEl, day);
+
+            if (this._callbacks["all"]) {
+              this._callbacks["all"](dayEl, day);
+            }
           } else {
             dayEl.innerHTML = day.value.getDate() || "&nbsp;";
           }

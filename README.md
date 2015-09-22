@@ -9,9 +9,6 @@ performance, flexibility, and stability in mind.
 Development is fully commented source, Production is minified and stripped of
 all comments except for license/credits.
 
-* [Development](https://raw.github.com/matchbox/calendar.js/master/calendar.js)
-* [Production](https://raw.github.com/matchbox/calendar.js/master/dist/calendar.min.js)
-
 Include in your application.
 
 ``` html
@@ -153,6 +150,4 @@ Please follow the style found within the source and exercise solid judgement.
 
 ---
 
-Copyright 2012 Matchbox, Inc.
-
-![Matchbox, Inc.](https://github.com/matchbox/calendar.js/raw/assets/matchbox-logo-240x40.png)
+Copyright 2015 Tim Branyen (@tbranyen).
