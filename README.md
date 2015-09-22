@@ -4,6 +4,8 @@ calendar.js
 A tiny component for creating calendars in modern web browsers with
 performance, flexibility, and stability in mind.
 
+![](http://tbranyen.com/u/e4b4c660.png)
+
 ## Download & Include ##
 
 Development is fully commented source, Production is minified and stripped of
