@@ -4,7 +4,7 @@ calendar.js
 A tiny component for creating calendars in modern web browsers with
 performance, flexibility, and stability in mind.
 
-![](http://tbranyen.com/u/e4b4c660.png)
+![](http://tbranyen.com/u/20155a00.png)
 
 ## Download & Include ##
 
@@ -16,24 +16,6 @@ Include in your application.
 ``` html
 <script src="/js/calendar.js"></script>
 ```
-
-### Using with AMD ###
-
-If you are using RequireJS you can include using the shim configuration.
-
-``` javascript
-require.config({
-  shim: {
-    // Include calendar.js and ensure the global is exported correctly.
-    "calendar": {
-      exports: "Calendar"
-    }
-  }
-});
-```
-
-If you are using a different AMD loader, perhaps the
-[use.js](https://github.com/tbranyen/use.js) plugin will work for you.
 
 ## Usage ##
 
@@ -108,32 +90,12 @@ cal.on("update", function(cal) {
 You can create and trigger custom events, using `on` and `trigger` functions
 respectively.
 
-### Customizing what is shown in specific date cells ###
-
-...
-
-### Changing and updating the calendar date ###
-
-...
-
 ## Building ##
 
-If you wish to lint the source, build a distribution file, and/or run unit
-tests you will need to install [Grunt](https://github.com/cowboy/grunt).  Once
-this is installed open a terminal to the calendar.js path and run:
-
 ``` bash
-# To run linting, testing, and minification.
-grunt
-
-# To run just a single task.
-grunt lint
-
-# To run multiple tasks.
-grunt lint min
+npm install
+npm run build
 ```
-
-Available tasks are: `lint`, `qunit`, and `min`.
 
 ## Contributing ##
 
@@ -142,14 +104,3 @@ fixes should include matching unit tests, pass linting, and provide an updated
 minified source file for distribution.
 
 Please follow the style found within the source and exercise solid judgement.
-
-## Author ##
-
-**Tim Branyen**
-
-* http://twitter.com/tbranyen
-* http://github.com/tbranyen
-
----
-
-Copyright 2015 Tim Branyen (@tbranyen).

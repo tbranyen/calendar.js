@@ -7,6 +7,8 @@
     "example": "example"
   },
   "scripts": {
+    "build": "npm run browserify",
+    "browserify": "browserify -s Calendar lib/index.js -o dist/calendar.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/tbranyen/calendar.js/issues"
   },
-  "homepage": "https://github.com/tbranyen/calendar.js#readme"
+  "homepage": "https://github.com/tbranyen/calendar.js#readme",
+  "devDependencies": {
+    "browserify": "^11.1.0"
+  }
 }

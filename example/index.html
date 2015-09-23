@@ -13,15 +13,28 @@
     <span class="year"></span>
   </div>
 
+  <div class="labels">
+    <table>
+      <tr class="week">
+        <td class="day day">Sun</td>
+        <td class="day day">Mon</td>
+        <td class="day day">Tue</td>
+        <td class="day day">Wed</td>
+        <td class="day day">Thu</td>
+        <td class="day day">Fri</td>
+        <td class="day day">Sat</td>
+      </tr>
+    </table>
+  </div>
+
   <div class="calendar"></div>
 
   <div class="controls">
-    <span class="prevMonth">&lt;</span>
-    <span class="prev"></span>
-    <span class="nextMonth">&gt;</span>
+    <button class="prevMonth">&lt;</button>
+    <button class="nextMonth">&gt;</button>
   </div>
 
-  <script src="../calendar.js"></script>
+  <script src="../dist/calendar.js"></script>
   <script>
     var $ = function(s) { return document.querySelector(s); };
     var cal = new Calendar(".calendar");

@@ -1,7 +1,40 @@
+body {
+  font-family: Helvetica;
+  background: #FFF8DB;
+  padding: 5%;
+}
+
+h3 {
+  display: inline;
+  margin-left: 0;
+  text-transform: uppercase;
+  font-size: 42px;
+  color: #868686;
+}
+
+.labels {
+  width: 500px;
+  height: 46px;
+  position: relative;
+}
+
+.labels table {
+  width: 100%;
+  position: absolute;
+  background: #777777 !important;
+}
+.labels table td {
+  background: #777777 !important;
+  padding: 12px;
+  text-align: center;
+  color: #FFF8DB;
+}
+
 .calendar {
   width: 500px;
   height: 500px;
   position: relative;
+  background: #777;
 }
 
 .calendar .month {
@@ -16,31 +49,45 @@
 }
 
 .calendar .week .day.today {
-  border: 1px solid #000;
+  background: #FF763F;
 }
 
 .calendar .week .day {
-  background: #F6F6F4;
-  border: 1px solid #C8C7C6;
+  background: #FFDBB6;
+  border: 1px solid #FFE8D1;
+  color: #565656;
+  font-weight: bold;
 }
 
 .calendar .week .day:first-child, .week .day:last-child {
-  background: #E7E7E7;
+  background: #FFAE62;
 }
 
 div.controls {
-  width: 220px;
-  text-align: center;
+  width: 500px;
+  text-align: left;
+}
+
+.controls .year {
+  font-weight: bold;
+  color: #333;
+}
+
+.prevMonth, .nextMonth {
+  background-color: #777;
+  color: #FFF8DB;
+  border: 0;
+  height: 33px;
+  font-size: 24px;
+  cursor: pointer;
+  width: 50%;
+  outline: none;
 }
 
 .prevMonth {
   float: left;
-  cursor: pointer;
-  width: 45px;
 }
 
 .nextMonth {
   float: right;
-  cursor: pointer;
-  width: 45px;
 }
