@@ -1,6 +1,6 @@
 {
   "name": "calendar.js",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A basic Calendar control",
   "main": "dist/calendar.js",
   "directories": {
@@ -8,13 +8,10 @@
   },
   "scripts": {
     "build": "npm run browserify",
-    "browserify": "browserify -s Calendar lib/index.js -o dist/calendar.js",
+    "browserify": "browserify -s Calendar lib/index.js | derequire > dist/calendar.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tbranyen/calendar.js.git"
-  },
+  "repository": "https://github.com/tbranyen/calendar.js",
   "author": "Tim Branyen (@tbranyen)",
   "license": "MIT",
   "bugs": {
@@ -22,6 +19,7 @@
   },
   "homepage": "https://github.com/tbranyen/calendar.js#readme",
   "devDependencies": {
-    "browserify": "^11.1.0"
+    "browserify": "^11.1.0",
+    "derequire": "^2.0.2"
   }
 }
