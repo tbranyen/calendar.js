@@ -1,6 +1,6 @@
 {
   "name": "calendar.js",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A basic Calendar control",
   "main": "dist/calendar.js",
   "directories": {

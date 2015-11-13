@@ -213,8 +213,6 @@ Calendar.prototype = {
     // Ensure the date matrix is updated.
     this.update();
 
-    // Create a clone of the current element to operate (off the document).
-    var shadow = this.el.cloneNode(false);
     // Create a month element to hold the calendar weeks.
     var monthEl = document.createElement(this.options.tagName.month);
     // Set the className.
@@ -274,12 +272,8 @@ Calendar.prototype = {
       monthEl.appendChild(weekEl);
     }, this);
 
-    // Add the month element to the shadow element.
-    shadow.appendChild(monthEl);
-
-    // Replace the internal element with the shadow element.
-    this.el.parentNode.replaceChild(shadow, this.el);
-    this.el = shadow;
+    // Attach the month element.
+    this.el.appendChild(monthEl);
 
     // Allow a developer to modify the element after rendering is complete.
     this.emit("afterRender", this);
@@ -414,7 +408,7 @@ module.exports = extend;
 },{}],4:[function(_dereq_,module,exports){
 module.exports={
   "name": "calendar.js",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A basic Calendar control",
   "main": "dist/calendar.js",
   "directories": {
