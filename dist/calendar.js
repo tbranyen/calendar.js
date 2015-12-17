@@ -51,7 +51,7 @@ Calendar.version = _dereq_('../package.json').version;
 Calendar.prototype = {
   // Initial setup and rendering of the calendar control.
   init: function() {
-    // Create a new date object for today.
+    // Create a new date object starting today.
     this.date = new Date();
 
     // Extend the Date object with some additional convenience methods.
@@ -167,7 +167,6 @@ Calendar.prototype = {
 
     // Fill in next month.
     month.forEach(function(week, currentWeekOffset) {
-
       // Ensure we're operating only on weeks that exist on or after the
       // last day.
       if (currentWeekOffset >= weekOffset) {
@@ -242,14 +241,18 @@ Calendar.prototype = {
           day.type = "today";
         }
 
-        // If the type isn't already day, then ensure that class is also
-        // added.
-        if (day.type !== "day") {
-          dayEl.className = [dayEl.className, "day"].join(" ");
+        // Apply class type styles, but only if the type isn't already added.
+        if (dayEl.className.split(' ').indexOf(day.type) === -1) {
+          dayEl.className += " " + day.type;
         }
 
-        // Apply class type styles.
-        dayEl.className = [dayEl.className, day.type].join(" ");
+        // Set active object, ensure year/month/day are all equal.
+        if (day.value.getFullYear() === this.date.getFullYear() &&
+            day.value.getMonth() === this.date.getMonth() &&
+            day.value.getDate() === this.date.getDate()
+        ) {
+          dayEl.className += " active";
+        }
 
         // By default set the innerHTML to the day value.  If a custom
         // `renderDay` function is specified, then allow that function to
@@ -271,6 +274,9 @@ Calendar.prototype = {
       // Add the week element to the month element.
       monthEl.appendChild(weekEl);
     }, this);
+
+    // Clear out existing markup.
+    this.el.innerHTML = '';
 
     // Attach the month element.
     this.el.appendChild(monthEl);
@@ -408,7 +414,7 @@ module.exports = extend;
 },{}],4:[function(_dereq_,module,exports){
 module.exports={
   "name": "calendar.js",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A basic Calendar control",
   "main": "dist/calendar.js",
   "directories": {
