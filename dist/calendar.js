@@ -419,7 +419,7 @@ module.exports = extend;
 },{}],4:[function(_dereq_,module,exports){
 module.exports={
   "name": "calendar.js",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A basic Calendar control",
   "main": "dist/calendar.js",
   "directories": {
