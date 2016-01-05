@@ -52,13 +52,7 @@ Calendar.prototype = {
   // Initial setup and rendering of the calendar control.
   init: function() {
     // Create a new date object starting today.
-    this.date = new Date();
-
-    // Extend the Date object with some additional convenience methods.
-    extend(this.date, {
-      getFullMonth: getFullMonth,
-      getFullWeek: getFullWeek
-    });
+    this.setDate(new Date());
 
     // Allow events to run before initial update and render.
     this.emit("initialize", this);
@@ -70,6 +64,17 @@ Calendar.prototype = {
     this.render();
 
     return this;
+  },
+
+  // Attach a date object to the calendar for rendering window purposes.
+  setDate: function(date) {
+    this.date = date;
+
+    // Extend the Date object with some additional convenience methods.
+    extend(this.date, {
+      getFullMonth: getFullMonth,
+      getFullWeek: getFullWeek
+    });
   },
 
   // Create the internal month matrix.
