@@ -3,13 +3,12 @@ calendar.js
 
 A tiny component for creating calendars in modern web browsers with
 performance, flexibility, and stability in mind...
-
 ![](http://tbranyen.com/u/20155a00.png)
 
 ## Download & Include ##
 
 Development is fully commented source, Production is minified and stripped of
-all comments except for license/credits.
+all comments except for license/credits...
 
 Include in your application.
 
