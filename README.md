@@ -1,4 +1,4 @@
-calendar.js
+Calendar.js
 ===========
 
 A tiny component for creating calendars in modern web browsers with
